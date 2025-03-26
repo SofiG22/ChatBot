@@ -4,9 +4,9 @@ from transformers import pipeline
 app = Flask(__name__)
 
 # Cargar modelo de QA
-print("🚀 Cargando modelo de QA...")
+print("Cargando modelo de QA...")
 qa_pipeline = pipeline("question-answering", model="distilbert-base-cased-distilled-squad", max_answer_length=100000)
-print("✅ Modelo de QA cargado.")
+print("Modelo de QA cargado.")
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -23,9 +23,9 @@ def chat():
         respuesta = qa_pipeline({"question": pregunta, "context": contexto})
         return jsonify({"respuesta": respuesta["answer"]})
     except Exception as e:
-        print(f"❌ Error procesando la pregunta: {e}")
+        print(f"Error procesando la pregunta: {e}")
         return jsonify({"error": "No se pudo generar una respuesta."}), 500
 
 if __name__ == "__main__":
-    print("🚀 Chatbot Service iniciado en http://localhost:5001")
+    print("Chatbot Service iniciado en http://localhost:5001")
     app.run(host='0.0.0.0', port=5001, debug=True)

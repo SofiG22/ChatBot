@@ -39,7 +39,7 @@ def clasificar_genero():
             response = requests.post(f"{GENDER_CLASSIFICATION_URL}/clasificar", files=archivos)
             return jsonify(response.json()), response.status_code
         except requests.exceptions.RequestException as e:
-            print(f"❌ Error al comunicarse con el servicio de clasificación: {e}")
+            print(f"Error al comunicarse con el servicio de clasificación: {e}")
             return jsonify({"error": "No se pudo conectar con el servicio de clasificación."}), 500
     
     # Caso 2: Si se envió JSON (imagen en base64)
@@ -50,7 +50,7 @@ def clasificar_genero():
             response = requests.post(f"{GENDER_CLASSIFICATION_URL}/clasificar", json=data)
             return jsonify(response.json()), response.status_code
         except requests.exceptions.RequestException as e:
-            print(f"❌ Error al comunicarse con el servicio de clasificación: {e}")
+            print(f"Error al comunicarse con el servicio de clasificación: {e}")
             return jsonify({"error": "No se pudo conectar con el servicio de clasificación."}), 500
     
     # Caso 3: Si no hay ni archivos ni JSON
@@ -58,8 +58,8 @@ def clasificar_genero():
         return jsonify({"error": "Formato de solicitud no válido. Envíe un archivo de imagen o JSON con la imagen en base64."}), 400
 
 if __name__ == "__main__":
-    print("🚀 API Gateway iniciado en http://localhost:5000")
-    print("📌 Endpoints disponibles:")
+    print("API Gateway iniciado en http://localhost:5000")
+    print("Endpoints disponibles:")
     print("   - /chatbot: Redirección al servicio de chatbot")
     print("   - /clasificar-genero: Redirección al servicio de clasificación de género")
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
