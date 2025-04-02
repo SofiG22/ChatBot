@@ -14,15 +14,15 @@ modelo = "nlptown/bert-base-multilingual-uncased-sentiment"
 try:
     tokenizer = AutoTokenizer.from_pretrained(modelo)
     model = AutoModelForSequenceClassification.from_pretrained(modelo)
-    print(f"✅ Modelo {modelo} cargado correctamente")
+    print(f"Modelo {modelo} cargado correctamente")
 except Exception as e:
-    print(f"❌ Error al cargar el modelo: {e}")
-    print("⚠️ Intentando con un modelo alternativo...")
+    print(f"Error al cargar el modelo: {e}")
+    print("Intentando con un modelo alternativo...")
     # Intentar con un modelo alternativo como fallback
     modelo = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
     tokenizer = AutoTokenizer.from_pretrained(modelo)
     model = AutoModelForSequenceClassification.from_pretrained(modelo)
-    print(f"✅ Modelo alternativo {modelo} cargado correctamente")
+    print(f" Modelo alternativo {modelo} cargado correctamente")
 
 # Mapeo personalizado de emociones según el frontend
 # El modelo BERT de sentimientos tiene 5 clases (0-4), las mapeamos a las emociones del frontend
@@ -159,47 +159,47 @@ def detectar_emocion_endpoint():
     resultado = detectar_emocion(texto)
     return jsonify(resultado)
 
-@app.route('/batch', methods=['POST'])
-def batch_analysis():
-    """Endpoint para analizar múltiples textos en una sola solicitud"""
+# @app.route('/batch', methods=['POST'])
+# def batch_analysis():
+#     """Endpoint para analizar múltiples textos en una sola solicitud"""
     
-    # Verificar si se recibió JSON
-    if not request.is_json:
-        return jsonify({
-            "success": False, 
-            "error": "La solicitud debe ser en formato JSON."
-        }), 400
+#     # Verificar si se recibió JSON
+#     if not request.is_json:
+#         return jsonify({
+#             "success": False, 
+#             "error": "La solicitud debe ser en formato JSON."
+#         }), 400
     
-    # Obtener la lista de textos
-    data = request.get_json()
-    if not data or "textos" not in data or not isinstance(data["textos"], list):
-        return jsonify({
-            "success": False,
-            "error": "Formato incorrecto. Se requiere el campo 'textos' como lista."
-        }), 400
+#     # Obtener la lista de textos
+#     data = request.get_json()
+#     if not data or "textos" not in data or not isinstance(data["textos"], list):
+#         return jsonify({
+#             "success": False,
+#             "error": "Formato incorrecto. Se requiere el campo 'textos' como lista."
+#         }), 400
     
-    textos = data["textos"]
+#     textos = data["textos"]
     
-    # Analizar cada texto
-    resultados = []
-    for texto in textos:
-        resultado = detectar_emocion(texto)
-        resultados.append(resultado)
+#     # Analizar cada texto
+#     resultados = []
+#     for texto in textos:
+#         resultado = detectar_emocion(texto)
+#         resultados.append(resultado)
     
-    return jsonify({
-        "success": True,
-        "resultados": resultados
-    })
+#     return jsonify({
+#         "success": True,
+#         "resultados": resultados
+#     })
 
-@app.route('/estado', methods=['GET'])
-def health_check():
-    """Endpoint para verificar el estado del servicio"""
-    return jsonify({
-        "status": "online",
-        "model": modelo,
-        "version": "1.0.0",
-        "emociones_soportadas": list(set(emotion_mapping.values()))
-    })
+# @app.route('/estado', methods=['GET'])
+# def health_check():
+#     """Endpoint para verificar el estado del servicio"""
+#     return jsonify({
+#         "status": "online",
+#         "model": modelo,
+#         "version": "1.0.0",
+#         "emociones_soportadas": list(set(emotion_mapping.values()))
+#     })
 
 if __name__ == '__main__':
     print("🚀 Servicio de análisis de sentimientos iniciado en http://localhost:5003")
