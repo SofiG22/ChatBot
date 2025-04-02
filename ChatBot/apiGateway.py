@@ -24,7 +24,7 @@ def chatbot():
         
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error al comunicarse con el chatbot: {e}")
+        print(f"Error al comunicarse con el chatbot: {e}")
         return jsonify({"error": "No se pudo conectar con el chatbot."}), 500
 
 @app.route("/clasificar", methods=["POST"])
@@ -40,7 +40,7 @@ def clasificar_genero():
             response = requests.post(f"{GENDER_CLASSIFICATION_URL}/clasificar", files=archivos)
             return jsonify(response.json()), response.status_code
         except requests.exceptions.RequestException as e:
-            print(f"❌ Error al comunicarse con el servicio de clasificación: {e}")
+            print(f"Error al comunicarse con el servicio de clasificación: {e}")
             return jsonify({"error": "No se pudo conectar con el servicio de clasificación."}), 500
     
     # Caso 2: Si se envió JSON (imagen en base64 o URL)
@@ -51,7 +51,7 @@ def clasificar_genero():
             response = requests.post(f"{GENDER_CLASSIFICATION_URL}/clasificar", json=data)
             return jsonify(response.json()), response.status_code
         except requests.exceptions.RequestException as e:
-            print(f"❌ Error al comunicarse con el servicio de clasificación: {e}")
+            print(f"Error al comunicarse con el servicio de clasificación: {e}")
             return jsonify({"error": "No se pudo conectar con el servicio de clasificación."}), 500
     
     # Caso 3: Si no hay ni archivos ni JSON
@@ -72,7 +72,7 @@ def detectar_emocion():
         response = requests.post(f"{EMOTION_ANALYSIS_URL}/detectar-emocion", json=data)
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error al comunicarse con el servicio de análisis de emociones: {e}")
+        print(f"Error al comunicarse con el servicio de análisis de emociones: {e}")
         return jsonify({"error": "No se pudo conectar con el servicio de análisis de emociones."}), 500
 
 @app.route("/batch-emociones", methods=["POST"])
@@ -89,7 +89,7 @@ def batch_emociones():
         response = requests.post(f"{EMOTION_ANALYSIS_URL}/batch", json=data)
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error al comunicarse con el servicio de análisis de emociones: {e}")
+        print(f"Error al comunicarse con el servicio de análisis de emociones: {e}")
         return jsonify({"error": "No se pudo conectar con el servicio de análisis de emociones."}), 500
 
 @app.route("/estado-emocion", methods=["GET"])
@@ -99,12 +99,12 @@ def estado_emocion():
         response = requests.get(f"{EMOTION_ANALYSIS_URL}/estado")
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error al comunicarse con el servicio de análisis de emociones: {e}")
+        print(f"Error al comunicarse con el servicio de análisis de emociones: {e}")
         return jsonify({"error": "No se pudo conectar con el servicio de análisis de emociones."}), 500
 
 if __name__ == "__main__":
-    print("🚀 API Gateway iniciado en http://localhost:5000")
-    print("📌 Endpoints disponibles:")
+    print("API Gateway iniciado en http://localhost:5000")
+    print("Endpoints disponibles:")
     print("   - /chatbot: Redirección al servicio de chatbot")
     print("   - /clasificar: Redirección al servicio de clasificación de imágenes")
     print("   - /detectar-emocion: Redirección al servicio de análisis de emociones")

@@ -10,7 +10,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-print("⏳ Cargando modelo de clasificación de imágenes...")
+print("Cargando modelo de clasificación de imágenes...")
 
 # Cargar el modelo y el procesador de características de Hugging Face
 # Usamos un modelo ViT preentrenado en ImageNet
@@ -18,15 +18,15 @@ model_name = "google/vit-base-patch16-224"
 try:
     feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
     model = AutoModelForImageClassification.from_pretrained(model_name)
-    print(f"✅ Modelo {model_name} cargado correctamente")
+    print(f"Modelo {model_name} cargado correctamente")
 except Exception as e:
-    print(f"❌ Error al cargar el modelo: {e}")
-    print("⚠️ Intentando con un modelo más pequeño...")
+    print(f"Error al cargar el modelo: {e}")
+    print("Intentando con un modelo más pequeño...")
     # Intentar con un modelo más pequeño como alternativa
     model_name = "microsoft/resnet-18"
     feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
     model = AutoModelForImageClassification.from_pretrained(model_name)
-    print(f"✅ Modelo alternativo {model_name} cargado correctamente")
+    print(f"Modelo alternativo {model_name} cargado correctamente")
 
 def classify_image(img):
     """Clasifica una imagen usando el modelo preentrenado"""
@@ -132,7 +132,7 @@ def clasificar():
         }), 400
 
 if __name__ == '__main__':
-    print("🚀 Servicio de clasificación de imágenes iniciado en http://localhost:5002")
-    print("📌 Endpoint disponible:")
+    print("Servicio de clasificación de imágenes iniciado en http://localhost:5002")
+    print("Endpoint disponible:")
     print("   - /clasificar: Endpoint para clasificación de imágenes")
     app.run(host='0.0.0.0', port=5002, debug=True)

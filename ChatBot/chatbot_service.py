@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from transformers import pipeline
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}}, supports_credentials=True)
+
 
 # Cargar modelo de QA
 print("Cargando modelo de QA...")
